@@ -35,7 +35,7 @@ import geopandas as gpd
 from shapely.geometry import Point
 import matplotlib.pyplot as plt
 
-folder_path = 'C:/Users/marieten/Downloads/geop/'
+folder_path = 'geop/'
 shapefile_path = folder_path + 'ne_10m_admin_1_states_provinces.shp'
 
 boundaries = gpd.read_file(shapefile_path)
