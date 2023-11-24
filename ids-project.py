@@ -67,3 +67,37 @@ geo_df.plot(ax=ax, alpha=0.5,column='Liiklusõnnetuse liik [1]', legend=True, le
 plt.show()
 
 
+geo_df['Maakond (PPA)'] = geo_df['Maakond (PPA)'].str.replace(' maakond', '')
+
+kokku = geo_df['Maakond (PPA)'].value_counts()
+#mergime index tulba ja name tulba pealt
+estonia = estonia.merge(kokku.rename('õnnetuste_arv'), left_on='name', right_index=True)
+
+
+fig, ax = plt.subplots(figsize=(10, 10))
+#vb oleks paremat värvi vaja
+estonia.plot(column='õnnetuste_arv', ax=ax, legend=True, cmap='OrRd')
+
+plt.show()
+
+
+import folium
+from folium.plugins import HeatMap
+
+map_estonia = folium.Map(location=[58.3776, 26.7290], zoom_start=7)
+
+locations = geo_df.geometry.apply(lambda p: [p.y, p.x]).tolist()
+
+HeatMap(locations).add_to(map_estonia)
+
+map_estonia.save('heatmap.html')
+
+
+
+# mis maakonnas mis tänaval kõige rohkem õnnetusi
+maakond_ja_tänav = df[['Maakond (PPA)','Tänav (PPA)']]
+grouped = maakond_ja_tänav.groupby(['Maakond (PPA)', 'Tänav (PPA)']).size().reset_index(name='õnnetuste arv')
+
+idx = grouped.groupby(['Maakond (PPA)'])['õnnetuste arv'].transform(max) == grouped['õnnetuste arv']
+result = grouped[idx]
+print(result)
