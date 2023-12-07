@@ -18,3 +18,9 @@ data_types_missing = pd.DataFrame({
 })
 
 print(numerical_summary, data_types_missing.head(10))  # Displaying the first 10 columns for data types and missing values info
+
+
+columns_to_drop = ['Maja nr (PPA)', 'Ristuv tänav (PPA)', 'Asula','Tee tüüp [1]','Tee nr (PPA)','Tee km (PPA)',]
+data.drop(columns=columns_to_drop, inplace=True)
+
+data.columns
