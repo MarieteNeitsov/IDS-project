@@ -13,4 +13,4 @@ If you encounter any issues opening the notebook, refer to this guide on [how to
 ## Replication Instructions
 To replicate our results:
 1. Open `mudel.ipynb`.
-2. Run all the cells in the notebook.
+2. Run all the cells in the notebook by clicking on run -> restart kernel and run all cells.
